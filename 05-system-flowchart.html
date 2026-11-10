@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>05 - System Flowchart | Mosari Resort &amp; Spa (BTEC HND Unit 7 SDLC)</title>
+  <style>
+    :root {
+      --bg-page: #f1f5f9;
+      --bg-canvas: #ffffff;
+      --border-canvas: #cbd5e1;
+
+      --term-fill: #f0fdf4;
+      --term-stroke: #15803d;
+
+      --proc-fill: #eff6ff;
+      --proc-stroke: #1d4ed8;
+
+      --dec-fill: #fffbeb;
+      --dec-stroke: #b45309;
+
+      --db-fill: #f0fdfa;
+      --db-stroke: #0f766e;
+
+      --err-fill: #fef2f2;
+      --err-stroke: #b91c1c;
+
+      --line-main: #334155;
+      --line-yes: #15803d;
+      --line-no: #b91c1c;
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --font-main: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: "Consolas", "SFMono-Regular", Menlo, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      font-family: var(--font-main);
+      color: var(--text-primary);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .toolbar {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .toolbar-info h1 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .toolbar-info p {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #0f172a;
+      font-family: var(--font-main);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    .btn-primary {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    .btn-primary:hover {
+      background: #1e293b;
+    }
+
+    .diagram-wrapper {
+      width: 100%;
+      max-width: 1200px;
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-canvas);
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+    }
+
+    .diagram-header {
+      text-align: center;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .diagram-header h2 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      color: #0f172a;
+      text-transform: uppercase;
+    }
+
+    .diagram-header p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 10mm;
+      }
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .toolbar {
+        display: none !important;
+      }
+      .diagram-wrapper {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Utility Bar -->
+  <div class="toolbar">
+    <div class="toolbar-info">
+      <h1>05. System Flowchart — Reservation &amp; Payment Workflow</h1>
+      <p>Concise ISO 5807 System Flowchart • Orthogonal Layout • BTEC HND Unit 7 (SDLC)</p>
+    </div>
+    <div class="toolbar-actions">
+      <button class="btn" onclick="window.print()">Print / Save PDF</button>
+      <button class="btn" onclick="downloadSVG()">Download SVG</button>
+      <button class="btn btn-primary" onclick="downloadPNG()">Export PNG (Hi-Res)</button>
+    </div>
+  </div>
+
+  <!-- Printable Diagram Sheet -->
+  <div class="diagram-wrapper">
+    <div class="diagram-header">
+      <h2>Mosari Resort &amp; Spa — Core Reservation &amp; Payment Flowchart</h2>
+      <p>End-to-End Business Process: Room Search, Anti-Conflict Allocation, VietQR / Card Payment &amp; Confirmation</p>
+    </div>
+
+    <svg id="diagram-svg" viewBox="0 0 1100 920" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif">
+      <defs>
+        <marker id="arrow-main" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#334155" />
+        </marker>
+        <marker id="arrow-yes" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#15803d" />
+        </marker>
+        <marker id="arrow-no" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#b91c1c" />
+        </marker>
+      </defs>
+
+      <!-- White Background for Export -->
+      <rect x="0" y="0" width="1100" height="920" fill="#ffffff" />
+
+      <!-- ============================================================ -->
+      <!-- FLOW CONNECTORS (Strictly Orthogonal)                        -->
+      <!-- ============================================================ -->
+      <g id="connectors" fill="none" stroke-width="2">
+        <!-- Start -> Step 1 -->
+        <path d="M 430 66 L 430 105" stroke="#334155" marker-end="url(#arrow-main)" />
+
+        <!-- Step 1 -> Step 2 -->
+        <path d="M 430 175 L 430 215" stroke="#334155" marker-end="url(#arrow-main)" />
+
+        <!-- Step 2 -> Decision 1 (Room Available?) -->
+        <path d="M 430 285 L 430 325" stroke="#334155" marker-end="url(#arrow-main)" />
+
+        <!-- Decision 1 (NO) -> Reject / Conflict Box -> Loop back to Step 1 -->
+        <path d="M 575 380 L 730 380" stroke="#b91c1c" marker-end="url(#arrow-no)" />
+        <path d="M 880 345 L 880 140 L 600 140" stroke="#b91c1c" stroke-dasharray="6 4" marker-end="url(#arrow-no)" />
+
+        <!-- Decision 1 (YES) -> Step 3 (Create Booking & Payment Ledger) -->
+        <path d="M 430 435 L 430 485" stroke="#15803d" marker-end="url(#arrow-yes)" />
+
+        <!-- Step 3 -> Step 4 (Process Payment) -->
+        <path d="M 430 565 L 430 610" stroke="#334155" marker-end="url(#arrow-main)" />
+
+        <!-- Step 4 -> Decision 2 (Payment Verified?) -->
+        <path d="M 430 680 L 430 720" stroke="#334155" marker-end="url(#arrow-main)" />
+
+        <!-- Decision 2 (NO) -> Hold / Cancel Pending Booking -->
+        <path d="M 575 775 L 730 775" stroke="#b91c1c" marker-end="url(#arrow-no)" />
+        <!-- Cancel Box -> End -->
+        <path d="M 880 810 L 880 875 L 530 875" stroke="#334155" marker-end="url(#arrow-main)" />
+
+        <!-- Decision 2 (YES) -> Step 5 (Confirm Reservation) -->
+        <path d="M 285 775 L 220 775" stroke="#15803d" marker-end="url(#arrow-yes)" />
+        <!-- Step 5 -> End -->
+        <path d="M 125 815 L 125 875 L 330 875" stroke="#15803d" marker-end="url(#arrow-yes)" />
+      </g>
+
+      <!-- ============================================================ -->
+      <!-- BRANCH LABELS                                                -->
+      <!-- ============================================================ -->
+      <g id="branch-labels" font-size="11.5" font-weight="700">
+        <!-- D1 Yes -->
+        <rect x="440" y="445" width="96" height="22" rx="4" fill="#dcfce7" stroke="#86efac" />
+        <text x="488" y="460" text-anchor="middle" fill="#166534">YES (Available)</text>
+
+        <!-- D1 No -->
+        <rect x="595" y="354" width="115" height="22" rx="4" fill="#fee2e2" stroke="#fca5a5" />
+        <text x="652" y="369" text-anchor="middle" fill="#991b1b">NO (409 Conflict)</text>
+
+        <!-- Loop back label -->
+        <rect x="675" y="114" width="150" height="20" rx="4" fill="#ffffff" stroke="#fca5a5" />
+        <text x="750" y="128" text-anchor="middle" fill="#991b1b" font-size="11">Select New Dates / Suite</text>
+
+        <!-- D2 Yes -->
+        <rect x="226" y="748" width="54" height="22" rx="4" fill="#dcfce7" stroke="#86efac" />
+        <text x="253" y="763" text-anchor="middle" fill="#166534">YES</text>
+
+        <!-- D2 No -->
+        <rect x="615" y="748" width="88" height="22" rx="4" fill="#fee2e2" stroke="#fca5a5" />
+        <text x="659" y="763" text-anchor="middle" fill="#991b1b">NO / Cancel</text>
+      </g>
+
+      <!-- ============================================================ -->
+      <!-- FLOWCHART NODES                                              -->
+      <!-- ============================================================ -->
+
+      <!-- START NODE -->
+      <g id="node-start">
+        <rect x="330" y="20" width="200" height="46" rx="23" fill="var(--term-fill)" stroke="var(--term-stroke)" stroke-width="2" />
+        <text x="430" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#14532d">START</text>
+      </g>
+
+      <!-- STEP 1: SEARCH & SELECT -->
+      <g id="node-step1">
+        <rect x="260" y="105" width="340" height="70" rx="8" fill="var(--proc-fill)" stroke="var(--proc-stroke)" stroke-width="2" />
+        <text x="430" y="135" text-anchor="middle" font-size="14" font-weight="700" fill="#1e3a8a">1. Search &amp; Select Suite</text>
+        <text x="430" y="156" text-anchor="middle" font-size="12" fill="#334155">Customer selects Branch, Check-in/Check-out Dates &amp; Room Type</text>
+      </g>
+
+      <!-- STEP 2: VALIDATE AVAILABILITY -->
+      <g id="node-step2">
+        <rect x="260" y="215" width="340" height="70" rx="8" fill="var(--proc-fill)" stroke="var(--proc-stroke)" stroke-width="2" />
+        <text x="430" y="245" text-anchor="middle" font-size="14" font-weight="700" fill="#1e3a8a">2. Validate Room Availability</text>
+        <text x="430" y="266" text-anchor="middle" font-size="12" fill="#334155">Check physical rooms &amp; PostgreSQL anti-overlap constraint</text>
+      </g>
+
+      <!-- DECISION 1: ROOM AVAILABLE? -->
+      <g id="node-dec1">
+        <polygon points="430,325 575,380 430,435 285,380" fill="var(--dec-fill)" stroke="var(--dec-stroke)" stroke-width="2" />
+        <text x="430" y="376" text-anchor="middle" font-size="13.5" font-weight="700" fill="#78350f">Physical Room</text>
+        <text x="430" y="394" text-anchor="middle" font-size="13.5" font-weight="700" fill="#78350f">Available?</text>
+      </g>
+
+      <!-- ERROR / CONFLICT NODE (Right of Decision 1) -->
+      <g id="node-conflict">
+        <rect x="730" y="345" width="300" height="70" rx="8" fill="var(--err-fill)" stroke="var(--err-stroke)" stroke-width="2" />
+        <text x="880" y="375" text-anchor="middle" font-size="13.5" font-weight="700" fill="#991b1b">Display Sold-Out / Conflict Alert</text>
+        <text x="880" y="396" text-anchor="middle" font-size="12" fill="#7f1d1d">Block double-booking &amp; prompt alternative dates</text>
+      </g>
+
+      <!-- STEP 3: ALLOCATE ROOM & SAVE RESERVATION (Database Action) -->
+      <g id="node-step3">
+        <rect x="250" y="485" width="360" height="80" rx="8" fill="var(--db-fill)" stroke="var(--db-stroke)" stroke-width="2" />
+        <text x="430" y="514" text-anchor="middle" font-size="14" font-weight="700" fill="#115e59">3. Create Reservation &amp; Payment Ledger</text>
+        <text x="430" y="534" text-anchor="middle" font-size="12" fill="#334155">Assign room, save Booking (MSR-XXXXXX, status: Pending)</text>
+        <text x="430" y="551" text-anchor="middle" font-size="11.5" font-family="Consolas, monospace" fill="#0f766e">DB Trigger -&gt; Auto-create Payment (TXN-XXXXXX)</text>
+      </g>
+
+      <!-- STEP 4: PAYMENT INITIATION -->
+      <g id="node-step4">
+        <rect x="260" y="610" width="340" height="70" rx="8" fill="var(--proc-fill)" stroke="var(--proc-stroke)" stroke-width="2" />
+        <text x="430" y="640" text-anchor="middle" font-size="14" font-weight="700" fill="#1e3a8a">4. Initiate Payment Transaction</text>
+        <text x="430" y="661" text-anchor="middle" font-size="12" fill="#334155">Generate dynamic Multi-Bank VietQR / Process Card or Cash</text>
+      </g>
+
+      <!-- DECISION 2: PAYMENT VERIFIED? -->
+      <g id="node-dec2">
+        <polygon points="430,720 575,775 430,830 285,775" fill="var(--dec-fill)" stroke="var(--dec-stroke)" stroke-width="2" />
+        <text x="430" y="771" text-anchor="middle" font-size="13.5" font-weight="700" fill="#78350f">Payment Verified</text>
+        <text x="430" y="789" text-anchor="middle" font-size="13.5" font-weight="700" fill="#78350f">/ Approved?</text>
+      </g>
+
+      <!-- STEP 5A (LEFT): CONFIRM BOOKING -->
+      <g id="node-confirm">
+        <rect x="30" y="735" width="190" height="80" rx="8" fill="var(--term-fill)" stroke="var(--term-stroke)" stroke-width="2" />
+        <text x="125" y="763" text-anchor="middle" font-size="13.5" font-weight="700" fill="#14532d">5a. Confirm Booking</text>
+        <text x="125" y="782" text-anchor="middle" font-size="11.5" fill="#166534">Payment = Completed</text>
+        <text x="125" y="799" text-anchor="middle" font-size="11.5" fill="#166534">Booking = Confirmed</text>
+      </g>
+
+      <!-- STEP 5B (RIGHT): CANCEL / EXPIRE BOOKING -->
+      <g id="node-cancel">
+        <rect x="730" y="740" width="300" height="70" rx="8" fill="var(--err-fill)" stroke="var(--err-stroke)" stroke-width="2" />
+        <text x="880" y="768" text-anchor="middle" font-size="13.5" font-weight="700" fill="#991b1b">5b. Cancel / Reject Reservation</text>
+        <text x="880" y="789" text-anchor="middle" font-size="12" fill="#7f1d1d">Update status to Cancelled &amp; release physical room</text>
+      </g>
+
+      <!-- END NODE -->
+      <g id="node-end">
+        <rect x="330" y="852" width="200" height="46" rx="23" fill="var(--term-fill)" stroke="var(--term-stroke)" stroke-width="2" />
+        <text x="430" y="880" text-anchor="middle" font-size="14" font-weight="700" fill="#14532d">END</text>
+      </g>
+
+      <!-- ============================================================ -->
+      <!-- COMPACT LEGEND (Top Left)                                    -->
+      <!-- ============================================================ -->
+      <g id="legend" transform="translate(25, 20)">
+        <rect x="0" y="0" width="200" height="148" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
+        <text x="14" y="22" font-size="11.5" font-weight="700" fill="#0f172a">FLOWCHART NOTATION</text>
+
+        <rect x="14" y="34" width="28" height="14" rx="7" fill="var(--term-fill)" stroke="var(--term-stroke)" stroke-width="1.5" />
+        <text x="52" y="45" font-size="11" fill="#334155">Start / End Terminal</text>
+
+        <rect x="14" y="58" width="28" height="16" rx="3" fill="var(--proc-fill)" stroke="var(--proc-stroke)" stroke-width="1.5" />
+        <text x="52" y="70" font-size="11" fill="#334155">System Process Step</text>
+
+        <polygon points="28,82 42,90 28,98 14,90" fill="var(--dec-fill)" stroke="var(--dec-stroke)" stroke-width="1.5" />
+        <text x="52" y="94" font-size="11" fill="#334155">Decision / Validation</text>
+
+        <rect x="14" y="108" width="28" height="16" rx="3" fill="var(--db-fill)" stroke="var(--db-stroke)" stroke-width="1.5" />
+        <text x="52" y="120" font-size="11" fill="#334155">Database &amp; Trigger Op</text>
+
+        <rect x="14" y="130" width="28" height="12" rx="3" fill="var(--err-fill)" stroke="var(--err-stroke)" stroke-width="1.5" />
+        <text x="52" y="140" font-size="11" fill="#334155">Exception / Cancellation</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Export Scripts (Self-Contained, No External Dependencies) -->
+  <script>
+    function getSerializedSVG() {
+      const svgEl = document.getElementById("diagram-svg");
+      const clone = svgEl.cloneNode(true);
+      const style = document.createElementNS("http://www.w3.org/2000/svg", "style");
+      style.textContent = `
+        :root {
+          --term-fill: #f0fdf4;
+          --term-stroke: #15803d;
+          --proc-fill: #eff6ff;
+          --proc-stroke: #1d4ed8;
+          --dec-fill: #fffbeb;
+          --dec-stroke: #b45309;
+          --db-fill: #f0fdfa;
+          --db-stroke: #0f766e;
+          --err-fill: #fef2f2;
+          --err-stroke: #b91c1c;
+        }
+      `;
+      clone.insertBefore(style, clone.firstChild);
+      return new XMLSerializer().serializeToString(clone);
+    }
+
+    function downloadSVG() {
+      const svgData = getSerializedSVG();
+      const blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "05-system-flowchart.svg";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function downloadPNG() {
+      const svgData = getSerializedSVG();
+      const img = new Image();
+      const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(svgBlob);
+
+      img.onload = function () {
+        const scale = 2.5;
+        const canvas = document.createElement("canvas");
+        canvas.width = 1100 * scale;
+        canvas.height = 920 * scale;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        URL.revokeObjectURL(url);
+
+        canvas.toBlob(function (blob) {
+          const pngUrl = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = pngUrl;
+          a.download = "05-system-flowchart.png";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(pngUrl);
+        }, "image/png");
+      };
+      img.src = url;
+    }
+  </script>
+</body>
+</html>
+

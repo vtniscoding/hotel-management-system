@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary-gold: #c0a038;
+    --primary-gold-hover: #8d762c;
+    --navy-dark: #11171d;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-[#f8f9fa] text-[#333333] font-open antialiased;
+  }
+}
+
+@layer components {
+  /* Logo text gradient */
+  .logo-text {
+    background: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Gray metallic gradient */
+  .gray-metallic-text {
+    background: linear-gradient(90deg, #858585 5%, #ffffff 50%, #858585 95%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Luxury Title 1 */
+  .luxury-title-1 {
+    @apply uppercase font-montserrat font-normal text-[#11171d] relative pb-4 mb-5 text-center text-2xl md:text-3xl tracking-wider;
+  }
+
+  .luxury-title-1::after {
+    content: "";
+    @apply absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-[2px] bg-[#c0a038];
+  }
+
+  /* Luxury Title 2 */
+  .luxury-title-2 {
+    background: linear-gradient(90deg, #29210b 5%, #c0a038 50%, #29210b 95%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    @apply font-montserrat font-semibold mb-2.5;
+  }
+
+  /* Gold buttons */
+  .btn-luxury-primary {
+    @apply inline-flex items-center justify-center px-7 py-3 rounded-full text-white font-medium text-sm transition-all duration-300 shadow-md bg-[#c0a038] hover:bg-[#8d762c] hover:-translate-y-0.5 hover:shadow-lg cursor-pointer;
+  }
+
+  .btn-luxury-outline {
+    @apply inline-flex items-center justify-center px-7 py-3 rounded-full border border-[#c0a038] text-[#c0a038] hover:bg-[#c0a038] hover:text-white font-medium text-sm transition-all duration-300 cursor-pointer;
+  }
+
+  .btn-luxury-secondary {
+    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-full border border-black/15 text-[#11171d] hover:bg-[#11171d] hover:text-white font-medium text-sm transition-all duration-300 shadow-sm cursor-pointer;
+  }
+
+  /* Badges */
+  .badge-status {
+    @apply px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5 w-fit;
+  }
+
+  .badge-available {
+    @apply bg-emerald-50 text-emerald-700 border border-emerald-200;
+  }
+
+  .badge-booked {
+    @apply bg-rose-50 text-rose-700 border border-rose-200;
+  }
+
+  .badge-maintenance {
+    @apply bg-amber-50 text-amber-700 border border-amber-200;
+  }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

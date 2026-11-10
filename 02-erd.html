@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>02 - Entity Relationship Diagram (ERD) | Mosari Resort &amp; Spa (BTEC HND Unit 7 SDLC)</title>
+  <style>
+    :root {
+      --bg-page: #f1f5f9;
+      --bg-canvas: #ffffff;
+      --bg-pkg-top: #f8fafc;
+      --bg-pkg-bottom: #fffdf9;
+      --border-pkg-top: #64748b;
+      --border-pkg-bottom: #b45309;
+
+      --entity-bg: #ffffff;
+      --entity-border: #1e293b;
+      --header-inventory: #0f172a;
+      --header-transaction: #78350f;
+      --header-payment: #065f46;
+
+      --badge-pk-bg: #fef3c7;
+      --badge-pk-text: #92400e;
+      --badge-fk-bg: #e0f2fe;
+      --badge-fk-text: #075985;
+      --badge-uk-bg: #f3e8ff;
+      --badge-uk-text: #6b21a8;
+      --badge-idx-bg: #dcfce7;
+      --badge-idx-text: #166534;
+
+      --line-rel: #1e293b;
+      --line-rel-accent: #0369a1;
+      --line-rel-revenue: #047857;
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --font-main: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: "Consolas", "SFMono-Regular", Menlo, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      font-family: var(--font-main);
+      color: var(--text-primary);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .toolbar {
+      width: 100%;
+      max-width: 1680px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .toolbar-info h1 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .toolbar-info p {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #0f172a;
+      font-family: var(--font-main);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    .btn-primary {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    .btn-primary:hover {
+      background: #1e293b;
+    }
+
+    .diagram-sheet {
+      width: 100%;
+      max-width: 1680px;
+      background: var(--bg-canvas);
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: var(--bg-canvas);
+    }
+
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 7mm;
+      }
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .toolbar {
+        display: none !important;
+      }
+      .diagram-sheet {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+      svg {
+        width: 100%;
+        max-height: 192mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Interactive Toolbar (Hidden in Print) -->
+  <div class="toolbar">
+    <div class="toolbar-info">
+      <h1>Diagram 02: Entity Relationship Diagram (ERD) — Mosari Resort &amp; Spa</h1>
+      <p>BTEC HND Unit 7 (SDLC) • PostgreSQL / Supabase Schema • Crow's-Foot Notation • Strictly Orthogonal Grid</p>
+    </div>
+    <div class="toolbar-actions">
+      <button class="btn" onclick="window.print()">Print / Save PDF (A4)</button>
+      <button class="btn" onclick="downloadSVG()">Save SVG</button>
+      <button class="btn btn-primary" onclick="exportPNG()">Export PNG (High-Res)</button>
+    </div>
+  </div>
+
+  <!-- Diagram Container -->
+  <div class="diagram-sheet">
+    <svg
+      id="diagram-svg"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1680 1130"
+      font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif"
+    >
+      <!-- Background -->
+      <rect x="0" y="0" width="1680" height="1130" fill="#ffffff" />
+
+      <!-- Diagram Title -->
+      <g id="diagram-header">
+        <text x="840" y="32" text-anchor="middle" font-size="20" font-weight="700" fill="#0f172a" letter-spacing="0.4">
+          MOSARI RESORT &amp; SPA — ENTITY RELATIONSHIP DIAGRAM (ERD)
+        </text>
+        <text x="840" y="51" text-anchor="middle" font-size="12.5" font-weight="500" fill="#475569">
+          Relational Database Schema (PostgreSQL BaaS) • Crow's-Foot Notation • Strictly Orthogonal Routing
+        </text>
+      </g>
+
+      <!-- ================================================================= -->
+      <!-- DOMAIN PACKAGES (2-TIER LOGICAL GROUPING)                         -->
+      <!-- ================================================================= -->
+      <g id="domain-packages">
+        <!-- Tier 1: Resort Master & Room Inventory -->
+        <rect x="28" y="68" width="1624" height="402" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4" />
+        <rect x="46" y="57" width="270" height="22" rx="4" fill="#e2e8f0" stroke="#64748b" stroke-width="1.2" />
+        <text x="181" y="72" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1e293b">
+          Package 1: Resort Master &amp; Room Inventory
+        </text>
+
+        <!-- Tier 2: Transactions & Customer Accounts -->
+        <rect x="28" y="546" width="1624" height="534" rx="8" fill="#fffdf9" stroke="#d97706" stroke-width="1.5" stroke-dasharray="6,4" />
+        <rect x="46" y="535" width="290" height="22" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.2" />
+        <text x="191" y="550" text-anchor="middle" font-size="11.5" font-weight="700" fill="#92400e">
+          Package 2: Transactions &amp; Customer Accounts
+        </text>
+      </g>
+
+      <!-- ================================================================= -->
+      <!-- ORTHOGONAL RELATIONSHIPS & CROW'S-FOOT MARKERS                    -->
+      <!-- ================================================================= -->
+      <g id="erd-relationships" fill="none" stroke-linecap="square" stroke-linejoin="miter">
+
+        <!-- 1. HOTELS (1) to ROOM_TYPES (0..N) ("categorizes") [Horizontal: y=215, x=440 to x=620] -->
+        <g id="rel-hotels-roomtypes" stroke="#1e293b" stroke-width="1.8">
+          <path d="M 440 215 H 620" />
+          <!-- Left One (||) at x=440 -->
+          <line x1="450" y1="207" x2="450" y2="223" />
+          <line x1="457" y1="207" x2="457" y2="223" />
+          <!-- Right Zero-or-Many (o{) at x=620 -->
+          <circle cx="601" cy="215" r="4.5" fill="#ffffff" stroke="#1e293b" stroke-width="1.6" />
+          <path d="M 608 215 L 620 207 M 608 215 L 620 215 M 608 215 L 620 223" />
+        </g>
+
+        <!-- 2. ROOM_TYPES (1) to ROOMS (0..N) ("allocates") [Horizontal: y=215, x=1040 to x=1220] -->
+        <g id="rel-roomtypes-rooms" stroke="#1e293b" stroke-width="1.8">
+          <path d="M 1040 215 H 1220" />
+          <!-- Left One (||) at x=1040 -->
+          <line x1="1050" y1="207" x2="1050" y2="223" />
+          <line x1="1057" y1="207" x2="1057" y2="223" />
+          <!-- Right Zero-or-Many (o{) at x=1220 -->
+          <circle cx="1201" cy="215" r="4.5" fill="#ffffff" stroke="#1e293b" stroke-width="1.6" />
+          <path d="M 1208 215 L 1220 207 M 1208 215 L 1220 215 M 1208 215 L 1220 223" />
+        </g>
+
+        <!-- 3. HOTELS (1) to ROOMS (0..N) ("contains") [Top Orthogonal Arch: x=250, y=108 to y=82 to x=1420 to y=108] -->
+        <g id="rel-hotels-rooms" stroke="#0369a1" stroke-width="1.7">
+          <path d="M 250 108 V 82 H 1420 V 108" />
+          <!-- Bottom-Left One (||) at (250, 108) -->
+          <line x1="242" y1="98" x2="258" y2="98" />
+          <line x1="242" y1="92" x2="258" y2="92" />
+          <!-- Bottom-Right Zero-or-Many (o{) at (1420, 108) -->
+          <circle cx="1420" cy="91" r="4.5" fill="#ffffff" stroke="#0369a1" stroke-width="1.6" />
+          <path d="M 1420 97 L 1412 108 M 1420 97 L 1420 108 M 1420 97 L 1428 108" />
+        </g>
+
+        <!-- 4. HOTELS (1) to BOOKINGS (0..N) ("hosts") [Orthogonal Step via Mid-Corridor: (340, 392) to y=514 to x=700 to y=575] -->
+        <g id="rel-hotels-bookings" stroke="#1e293b" stroke-width="1.7">
+          <path d="M 340 392 V 514 H 700 V 575" />
+          <!-- Top One (||) at (340, 392) -->
+          <line x1="332" y1="401" x2="348" y2="401" />
+          <line x1="332" y1="407" x2="348" y2="407" />
+          <!-- Bottom Zero-or-Many (o{) at (700, 575) -->
+          <circle cx="700" cy="557" r="4.5" fill="#ffffff" stroke="#1e293b" stroke-width="1.6" />
+          <path d="M 700 563 L 692 575 M 700 563 L 700 575 M 700 563 L 708 575" />
+        </g>
+
+        <!-- 5. HOTELS (1) to PAYMENTS (0..N) ("tracks revenue") [Orthogonal Step via Mid-Corridor: (200, 392) to y=486 to x=1500 to y=575] -->
+        <g id="rel-hotels-payments" stroke="#047857" stroke-width="1.7">
+          <path d="M 200 392 V 486 H 1500 V 575" />
+          <!-- Top One (||) at (200, 392) -->
+          <line x1="192" y1="401" x2="208" y2="401" />
+          <line x1="192" y1="407" x2="208" y2="407" />
+          <!-- Bottom Zero-or-Many (o{) at (1500, 575) -->
+          <circle cx="1500" cy="557" r="4.5" fill="#ffffff" stroke="#047857" stroke-width="1.6" />
+          <path d="M 1500 563 L 1492 575 M 1500 563 L 1500 575 M 1500 563 L 1508 575" />
+        </g>
+
+        <!-- 6. ROOM_TYPES (1) to BOOKINGS (0..N) ("reserved as") [Direct Vertical: x=830, y=452 to y=575] -->
+        <g id="rel-roomtypes-bookings" stroke="#1e293b" stroke-width="1.8">
+          <path d="M 830 452 V 575" />
+          <!-- Top One (||) at (830, 452) -->
+          <line x1="822" y1="461" x2="838" y2="461" />
+          <line x1="822" y1="467" x2="838" y2="467" />
+          <!-- Bottom Zero-or-Many (o{) at (830, 575) -->
+          <circle cx="830" cy="557" r="4.5" fill="#ffffff" stroke="#1e293b" stroke-width="1.6" />
+          <path d="M 830 563 L 822 575 M 830 563 L 830 575 M 830 563 L 838 575" />
+        </g>
+
+        <!-- 7. ROOMS (1) to BOOKINGS (0..N) ("assigned to") [Orthogonal Step: (1340, 296) to y=514 to x=960 to y=575] -->
+        <g id="rel-rooms-bookings" stroke="#0369a1" stroke-width="1.7">
+          <path d="M 1340 296 V 514 H 960 V 575" />
+          <!-- Top One (||) at (1340, 296) -->
+          <line x1="1332" y1="305" x2="1348" y2="305" />
+          <line x1="1332" y1="311" x2="1348" y2="311" />
+          <!-- Bottom Zero-or-Many (o{) at (960, 575) -->
+          <circle cx="960" cy="557" r="4.5" fill="#ffffff" stroke="#0369a1" stroke-width="1.6" />
+          <path d="M 960 563 L 952 575 M 960 563 L 960 575 M 960 563 L 968 575" />
+        </g>
+
+        <!-- 8. PROFILES (1) to BOOKINGS (0..N) ("creates") [Horizontal: y=690, x=440 to x=600] -->
+        <g id="rel-profiles-bookings" stroke="#1e293b" stroke-width="1.8">
+          <path d="M 440 690 H 600" />
+          <!-- Left One (||) at x=440 -->
+          <line x1="450" y1="682" x2="450" y2="698" />
+          <line x1="457" y1="682" x2="457" y2="698" />
+          <!-- Right Zero-or-Many (o{) at x=600 -->
+          <circle cx="581" cy="690" r="4.5" fill="#ffffff" stroke="#1e293b" stroke-width="1.6" />
+          <path d="M 588 690 L 600 682 M 588 690 L 600 690 M 588 690 L 600 698" />
+        </g>
+
+        <!-- 9. BOOKINGS (1) to PAYMENTS (1) ("generates ledger") [Horizontal: y=690, x=1060 to x=1220] -->
+        <g id="rel-bookings-payments" stroke="#047857" stroke-width="2">
+          <path d="M 1060 690 H 1220" />
+          <!-- Left One (||) at x=1060 -->
+          <line x1="1070" y1="682" x2="1070" y2="698" />
+          <line x1="1077" y1="682" x2="1077" y2="698" />
+          <!-- Right One (||) at x=1220 -->
+          <line x1="1203" y1="682" x2="1203" y2="698" />
+          <line x1="1210" y1="682" x2="1210" y2="698" />
+        </g>
+      </g>
+
+      <!-- ================================================================= -->
+      <!-- RELATIONSHIP LABELS (OFFSET FROM LINES SO THEY NEVER TOUCH)       -->
+      <!-- ================================================================= -->
+      <g id="relationship-labels" font-size="11" font-weight="700">
+        <!-- 1. categorizes (above line y=215) -->
+        <rect x="488" y="187" width="84" height="20" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" />
+        <text x="530" y="201" text-anchor="middle" fill="#0f172a">categorizes</text>
+
+        <!-- 2. allocates (above line y=215) -->
+        <rect x="1093" y="187" width="74" height="20" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" />
+        <text x="1130" y="201" text-anchor="middle" fill="#0f172a">allocates</text>
+
+        <!-- 3. contains (above line y=82) -->
+        <rect x="1080" y="56" width="74" height="20" rx="4" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1" />
+        <text x="1117" y="70" text-anchor="middle" fill="#0369a1">contains</text>
+
+        <!-- 4. hosts (below line y=514) -->
+        <rect x="490" y="520" width="60" height="20" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" />
+        <text x="520" y="534" text-anchor="middle" fill="#0f172a">hosts</text>
+
+        <!-- 5. tracks revenue (above line y=486) -->
+        <rect x="525" y="460" width="104" height="20" rx="4" fill="#ecfdf5" stroke="#34d399" stroke-width="1" />
+        <text x="577" y="474" text-anchor="middle" fill="#065f46">tracks revenue</text>
+
+        <!-- 6. reserved as (to the left of vertical line x=830) -->
+        <rect x="738" y="502" width="84" height="20" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" />
+        <text x="780" y="516" text-anchor="middle" fill="#0f172a">reserved as</text>
+
+        <!-- 7. assigned to (below line y=514) -->
+        <rect x="1110" y="520" width="86" height="20" rx="4" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1" />
+        <text x="1153" y="534" text-anchor="middle" fill="#0369a1">assigned to</text>
+
+        <!-- 8. creates (above line y=690) -->
+        <rect x="488" y="662" width="64" height="20" rx="4" fill="#fffbeb" stroke="#fcd34d" stroke-width="1" />
+        <text x="520" y="676" text-anchor="middle" fill="#92400e">creates</text>
+
+        <!-- 9. generates ledger (above line y=690) -->
+        <rect x="1084" y="662" width="112" height="20" rx="4" fill="#ecfdf5" stroke="#34d399" stroke-width="1" />
+        <text x="1140" y="676" text-anchor="middle" fill="#065f46">generates ledger</text>
+      </g>
+
+      <!-- ================================================================= -->
+      <!-- TIER 1 ENTITIES: HOTELS, ROOM_TYPES, ROOMS                        -->
+      <!-- ================================================================= -->
+
+      <!-- ENTITY 1: HOTELS (x=60, y=108, w=380, h=284) -->
+      <g id="entity-hotels" transform="translate(60, 108)">
+        <rect x="0" y="0" width="380" height="284" rx="6" fill="#ffffff" stroke="#1e293b" stroke-width="2" />
+        <rect x="0" y="0" width="380" height="32" rx="6" fill="#0f172a" />
+        <text x="190" y="21" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff" letter-spacing="0.6">HOTELS</text>
+        <!-- PK Divider -->
+        <line x1="0" y1="60" x2="380" y2="60" stroke="#94a3b8" stroke-width="1.2" />
+
+        <!-- Attributes -->
+        <g font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="11.5">
+          <!-- Row 1: PK -->
+          <rect x="10" y="38" width="28" height="16" rx="3" fill="#fef3c7" />
+          <text x="24" y="50" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">PK</text>
+          <text x="46" y="50" font-weight="700" fill="#0f172a">* id</text>
+          <text x="368" y="50" text-anchor="end" fill="#475569">TEXT</text>
+
+          <!-- Row 2: UK -->
+          <rect x="10" y="66" width="28" height="16" rx="3" fill="#f3e8ff" />
+          <text x="24" y="78" text-anchor="middle" font-size="10" font-weight="700" fill="#6b21a8">UK</text>
+          <text x="46" y="78" font-weight="600" fill="#0f172a">* code</text>
+          <text x="368" y="78" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="100" fill="#0f172a">* name_vi</text>
+          <text x="368" y="100" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="122" fill="#0f172a">* name_en</text>
+          <text x="368" y="122" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="144" fill="#0f172a">* city_vi</text>
+          <text x="368" y="144" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="166" fill="#0f172a">* city_en</text>
+          <text x="368" y="166" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="188" fill="#0f172a">* address_vi</text>
+          <text x="368" y="188" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="210" fill="#0f172a">* address_en</text>
+          <text x="368" y="210" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="232" fill="#0f172a">* phone</text>
+          <text x="368" y="232" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="254" fill="#334155">  image</text>
+          <text x="368" y="254" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="274" fill="#0f172a">* created_at</text>
+          <text x="368" y="274" text-anchor="end" fill="#475569">TIMESTAMPTZ</text>
+        </g>
+      </g>
+
+      <!-- ENTITY 2: ROOM_TYPES (x=620, y=108, w=420, h=344) -->
+      <g id="entity-room-types" transform="translate(620, 108)">
+        <rect x="0" y="0" width="420" height="344" rx="6" fill="#ffffff" stroke="#1e293b" stroke-width="2" />
+        <rect x="0" y="0" width="420" height="32" rx="6" fill="#0f172a" />
+        <text x="210" y="21" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff" letter-spacing="0.6">ROOM_TYPES</text>
+        <line x1="0" y1="60" x2="420" y2="60" stroke="#94a3b8" stroke-width="1.2" />
+
+        <g font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="11.5">
+          <!-- PK -->
+          <rect x="10" y="38" width="28" height="16" rx="3" fill="#fef3c7" />
+          <text x="24" y="50" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">PK</text>
+          <text x="46" y="50" font-weight="700" fill="#0f172a">* id</text>
+          <text x="408" y="50" text-anchor="end" fill="#475569">TEXT</text>
+
+          <!-- FK -->
+          <rect x="10" y="66" width="28" height="16" rx="3" fill="#e0f2fe" />
+          <text x="24" y="78" text-anchor="middle" font-size="10" font-weight="700" fill="#075985">FK</text>
+          <text x="46" y="78" font-weight="600" fill="#0f172a">* hotel_id</text>
+          <text x="408" y="78" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="100" fill="#0f172a">* name_vi</text>
+          <text x="408" y="100" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="121" fill="#0f172a">* name_en</text>
+          <text x="408" y="121" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="142" fill="#334155">  description_vi</text>
+          <text x="408" y="142" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="163" fill="#334155">  description_en</text>
+          <text x="408" y="163" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="184" fill="#0f172a">* area</text>
+          <text x="408" y="184" text-anchor="end" fill="#475569">INT</text>
+
+          <text x="46" y="205" fill="#0f172a">* capacity</text>
+          <text x="408" y="205" text-anchor="end" fill="#475569">INT</text>
+
+          <text x="46" y="226" fill="#0f172a">* base_price</text>
+          <text x="408" y="226" text-anchor="end" fill="#475569">NUMERIC(14,2)</text>
+
+          <text x="46" y="247" fill="#334155">  amenities_vi</text>
+          <text x="408" y="247" text-anchor="end" fill="#475569">JSONB</text>
+
+          <text x="46" y="268" fill="#334155">  amenities_en</text>
+          <text x="408" y="268" text-anchor="end" fill="#475569">JSONB</text>
+
+          <text x="46" y="289" fill="#334155">  images</text>
+          <text x="408" y="289" text-anchor="end" fill="#475569">JSONB</text>
+
+          <text x="46" y="310" fill="#334155">  featured</text>
+          <text x="408" y="310" text-anchor="end" fill="#475569">BOOLEAN</text>
+
+          <text x="46" y="331" fill="#0f172a">* created_at</text>
+          <text x="408" y="331" text-anchor="end" fill="#475569">TIMESTAMPTZ</text>
+        </g>
+      </g>
+
+      <!-- ENTITY 3: ROOMS (x=1220, y=108, w=400, h=188) -->
+      <g id="entity-rooms" transform="translate(1220, 108)">
+        <rect x="0" y="0" width="400" height="188" rx="6" fill="#ffffff" stroke="#1e293b" stroke-width="2" />
+        <rect x="0" y="0" width="400" height="32" rx="6" fill="#0f172a" />
+        <text x="200" y="21" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff" letter-spacing="0.6">ROOMS</text>
+        <line x1="0" y1="60" x2="400" y2="60" stroke="#94a3b8" stroke-width="1.2" />
+
+        <g font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="11.5">
+          <!-- PK -->
+          <rect x="10" y="38" width="28" height="16" rx="3" fill="#fef3c7" />
+          <text x="24" y="50" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">PK</text>
+          <text x="46" y="50" font-weight="700" fill="#0f172a">* id</text>
+          <text x="388" y="50" text-anchor="end" fill="#475569">TEXT</text>
+
+          <!-- FK 1 -->
+          <rect x="10" y="66" width="28" height="16" rx="3" fill="#e0f2fe" />
+          <text x="24" y="78" text-anchor="middle" font-size="10" font-weight="700" fill="#075985">FK</text>
+          <text x="46" y="78" font-weight="600" fill="#0f172a">* hotel_id</text>
+          <text x="388" y="78" text-anchor="end" fill="#475569">TEXT</text>
+
+          <!-- FK 2 -->
+          <rect x="10" y="90" width="28" height="16" rx="3" fill="#e0f2fe" />
+          <text x="24" y="102" text-anchor="middle" font-size="10" font-weight="700" fill="#075985">FK</text>
+          <text x="46" y="102" font-weight="600" fill="#0f172a">* room_type_id</text>
+          <text x="388" y="102" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="126" fill="#0f172a">* room_number</text>
+          <text x="388" y="126" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="150" fill="#0f172a">* status</text>
+          <text x="388" y="150" text-anchor="end" font-size="10.5" fill="#0369a1">TEXT «Available|Occupied|Maintenance»</text>
+
+          <text x="46" y="174" fill="#0f172a">* created_at</text>
+          <text x="388" y="174" text-anchor="end" fill="#475569">TIMESTAMPTZ</text>
+        </g>
+      </g>
+
+      <!-- ================================================================= -->
+      <!-- TIER 2 ENTITIES: PROFILES, BOOKINGS, PAYMENTS                     -->
+      <!-- ================================================================= -->
+
+      <!-- ENTITY 4: PROFILES (x=60, y=575, w=380, h=196) -->
+      <g id="entity-profiles" transform="translate(60, 575)">
+        <rect x="0" y="0" width="380" height="196" rx="6" fill="#ffffff" stroke="#1e293b" stroke-width="2" />
+        <rect x="0" y="0" width="380" height="32" rx="6" fill="#78350f" />
+        <text x="190" y="21" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff" letter-spacing="0.6">PROFILES</text>
+        <line x1="0" y1="60" x2="380" y2="60" stroke="#94a3b8" stroke-width="1.2" />
+
+        <g font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="11.5">
+          <!-- PK, FK -->
+          <rect x="10" y="38" width="46" height="16" rx="3" fill="#fef3c7" />
+          <text x="33" y="50" text-anchor="middle" font-size="9.5" font-weight="700" fill="#92400e">PK,FK</text>
+          <text x="64" y="50" font-weight="700" fill="#0f172a">* id</text>
+          <text x="368" y="50" text-anchor="end" fill="#475569">UUID («auth.users»)</text>
+
+          <text x="46" y="80" fill="#334155">  full_name</text>
+          <text x="368" y="80" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="106" fill="#334155">  phone</text>
+          <text x="368" y="106" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="132" fill="#0f172a">* role</text>
+          <text x="368" y="132" text-anchor="end" font-size="10.5" fill="#92400e">TEXT «customer|employee|admin»</text>
+
+          <text x="46" y="158" fill="#0f172a">* created_at</text>
+          <text x="368" y="158" text-anchor="end" fill="#475569">TIMESTAMPTZ</text>
+
+          <text x="46" y="182" fill="#0f172a">* updated_at</text>
+          <text x="368" y="182" text-anchor="end" fill="#475569">TIMESTAMPTZ</text>
+        </g>
+      </g>
+
+      <!-- ENTITY 5: BOOKINGS (x=600, y=575, w=460, h=490) -->
+      <g id="entity-bookings" transform="translate(600, 575)">
+        <rect x="0" y="0" width="460" height="490" rx="6" fill="#ffffff" stroke="#1e293b" stroke-width="2" />
+        <rect x="0" y="0" width="460" height="32" rx="6" fill="#78350f" />
+        <text x="230" y="21" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff" letter-spacing="0.6">BOOKINGS</text>
+        <line x1="0" y1="60" x2="460" y2="60" stroke="#94a3b8" stroke-width="1.2" />
+
+        <g font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="11.2">
+          <!-- PK -->
+          <rect x="10" y="38" width="28" height="16" rx="3" fill="#fef3c7" />
+          <text x="24" y="50" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">PK</text>
+          <text x="46" y="50" font-weight="700" fill="#0f172a">* id</text>
+          <text x="448" y="50" text-anchor="end" fill="#475569">UUID</text>
+
+          <!-- UK -->
+          <rect x="10" y="65" width="28" height="15" rx="3" fill="#f3e8ff" />
+          <text x="24" y="76" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6b21a8">UK</text>
+          <text x="46" y="76" font-weight="600" fill="#0f172a">* booking_code</text>
+          <text x="448" y="76" text-anchor="end" fill="#475569">TEXT</text>
+
+          <!-- FK hotel_id -->
+          <rect x="10" y="86" width="28" height="15" rx="3" fill="#e0f2fe" />
+          <text x="24" y="97" text-anchor="middle" font-size="9.5" font-weight="700" fill="#075985">FK</text>
+          <text x="46" y="97" font-weight="600" fill="#0f172a">* hotel_id</text>
+          <text x="448" y="97" text-anchor="end" fill="#475569">TEXT</text>
+
+          <!-- FK room_type_id -->
+          <rect x="10" y="107" width="28" height="15" rx="3" fill="#e0f2fe" />
+          <text x="24" y="118" text-anchor="middle" font-size="9.5" font-weight="700" fill="#075985">FK</text>
+          <text x="46" y="118" font-weight="600" fill="#0f172a">* room_type_id</text>
+          <text x="448" y="118" text-anchor="end" fill="#475569">TEXT</text>
+
+          <!-- FK room_id -->
+          <rect x="10" y="128" width="28" height="15" rx="3" fill="#e0f2fe" />
+          <text x="24" y="139" text-anchor="middle" font-size="9.5" font-weight="700" fill="#075985">FK</text>
+          <text x="46" y="139" fill="#334155">  room_id</text>
+          <text x="448" y="139" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="160" fill="#334155">  room_number</text>
+          <text x="448" y="160" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="181" fill="#0f172a">* room_type_name</text>
+          <text x="448" y="181" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="202" fill="#334155">  user_id</text>
+          <text x="448" y="202" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="223" fill="#0f172a">* customer_name</text>
+          <text x="448" y="223" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="244" fill="#0f172a">* customer_phone</text>
+          <text x="448" y="244" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="265" fill="#0f172a">* customer_email</text>
+          <text x="448" y="265" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="286" fill="#0f172a">* check_in_date</text>
+          <text x="448" y="286" text-anchor="end" fill="#475569">DATE</text>
+
+          <text x="46" y="307" fill="#0f172a">* check_out_date</text>
+          <text x="448" y="307" text-anchor="end" fill="#475569">DATE</text>
+
+          <text x="46" y="328" fill="#0f172a">* nights</text>
+          <text x="448" y="328" text-anchor="end" fill="#475569">INT</text>
+
+          <text x="46" y="349" fill="#0f172a">* guests</text>
+          <text x="448" y="349" text-anchor="end" fill="#475569">INT</text>
+
+          <text x="46" y="370" fill="#0f172a">* total_price</text>
+          <text x="448" y="370" text-anchor="end" fill="#475569">NUMERIC(14,2)</text>
+
+          <text x="46" y="391" fill="#0f172a">* payment_method</text>
+          <text x="448" y="391" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="412" fill="#0f172a">* payment_status</text>
+          <text x="448" y="412" text-anchor="end" font-size="10.2" fill="#92400e">TEXT «Pending|Success|Failed»</text>
+
+          <text x="46" y="433" fill="#0f172a">* status</text>
+          <text x="448" y="433" text-anchor="end" font-size="10" fill="#92400e">TEXT «Pending|Confirmed|Completed|Cancelled»</text>
+
+          <text x="46" y="454" fill="#334155">  special_requests</text>
+          <text x="448" y="454" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="475" fill="#0f172a">* created_at</text>
+          <text x="448" y="475" text-anchor="end" fill="#475569">TIMESTAMPTZ</text>
+        </g>
+      </g>
+
+      <!-- ENTITY 6: PAYMENTS (x=1220, y=575, w=400, h=376) -->
+      <g id="entity-payments" transform="translate(1220, 575)">
+        <rect x="0" y="0" width="400" height="376" rx="6" fill="#ffffff" stroke="#1e293b" stroke-width="2" />
+        <rect x="0" y="0" width="400" height="32" rx="6" fill="#065f46" />
+        <text x="200" y="21" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff" letter-spacing="0.6">PAYMENTS</text>
+        <line x1="0" y1="60" x2="400" y2="60" stroke="#94a3b8" stroke-width="1.2" />
+
+        <g font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="11.5">
+          <!-- PK -->
+          <rect x="10" y="38" width="28" height="16" rx="3" fill="#fef3c7" />
+          <text x="24" y="50" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">PK</text>
+          <text x="46" y="50" font-weight="700" fill="#0f172a">* id</text>
+          <text x="388" y="50" text-anchor="end" fill="#475569">UUID</text>
+
+          <!-- UK -->
+          <rect x="10" y="66" width="28" height="15" rx="3" fill="#f3e8ff" />
+          <text x="24" y="77" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6b21a8">UK</text>
+          <text x="46" y="77" font-weight="600" fill="#0f172a">* transaction_code</text>
+          <text x="388" y="77" text-anchor="end" fill="#475569">TEXT</text>
+
+          <!-- FK booking_id -->
+          <rect x="10" y="88" width="28" height="15" rx="3" fill="#e0f2fe" />
+          <text x="24" y="99" text-anchor="middle" font-size="9.5" font-weight="700" fill="#075985">FK</text>
+          <text x="46" y="99" font-weight="600" fill="#0f172a">* booking_id</text>
+          <text x="388" y="99" text-anchor="end" fill="#475569">UUID</text>
+
+          <!-- Index booking_code -->
+          <rect x="10" y="110" width="28" height="15" rx="3" fill="#dcfce7" />
+          <text x="24" y="121" text-anchor="middle" font-size="9" font-weight="700" fill="#166534">IDX</text>
+          <text x="46" y="121" font-weight="600" fill="#0f172a">* booking_code</text>
+          <text x="388" y="121" text-anchor="end" fill="#475569">TEXT</text>
+
+          <!-- FK hotel_id -->
+          <rect x="10" y="132" width="28" height="15" rx="3" fill="#e0f2fe" />
+          <text x="24" y="143" text-anchor="middle" font-size="9.5" font-weight="700" fill="#075985">FK</text>
+          <text x="46" y="143" font-weight="600" fill="#0f172a">* hotel_id</text>
+          <text x="388" y="143" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="165" fill="#334155">  user_id</text>
+          <text x="388" y="165" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="187" fill="#0f172a">* customer_name</text>
+          <text x="388" y="187" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="209" fill="#0f172a">* amount</text>
+          <text x="388" y="209" text-anchor="end" fill="#475569">NUMERIC(14,2)</text>
+
+          <text x="46" y="231" fill="#0f172a">* currency</text>
+          <text x="388" y="231" text-anchor="end" fill="#065f46">TEXT «VND»</text>
+
+          <text x="46" y="253" fill="#0f172a">* payment_method</text>
+          <text x="388" y="253" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="275" fill="#0f172a">* provider</text>
+          <text x="388" y="275" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="297" fill="#0f172a">* status</text>
+          <text x="388" y="297" text-anchor="end" font-size="10" fill="#065f46">TEXT «Pending|Completed|Failed|Refunded»</text>
+
+          <text x="46" y="319" fill="#334155">  notes</text>
+          <text x="388" y="319" text-anchor="end" fill="#475569">TEXT</text>
+
+          <text x="46" y="341" fill="#334155">  paid_at</text>
+          <text x="388" y="341" text-anchor="end" fill="#475569">TIMESTAMPTZ</text>
+
+          <text x="46" y="363" fill="#0f172a">* created_at</text>
+          <text x="388" y="363" text-anchor="end" fill="#475569">TIMESTAMPTZ</text>
+        </g>
+      </g>
+
+      <!-- ================================================================= -->
+      <!-- LEGEND & INTEGRITY NOTES BOX (BOTTOM LEFT)                        -->
+      <!-- ================================================================= -->
+      <g id="erd-legend" transform="translate(60, 800)">
+        <rect x="0" y="0" width="380" height="265" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+        <rect x="0" y="0" width="380" height="28" rx="6" fill="#334155" />
+        <text x="190" y="19" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">
+          ERD Notation &amp; Database Constraints Legend
+        </text>
+
+        <!-- Key Badges -->
+        <rect x="16" y="42" width="30" height="16" rx="3" fill="#fef3c7" />
+        <text x="31" y="54" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">PK</text>
+        <text x="56" y="54" font-size="11.5" fill="#0f172a">Primary Key (Unique Identifier)</text>
+
+        <rect x="16" y="66" width="30" height="16" rx="3" fill="#e0f2fe" />
+        <text x="31" y="78" text-anchor="middle" font-size="10" font-weight="700" fill="#075985">FK</text>
+        <text x="56" y="78" font-size="11.5" fill="#0f172a">Foreign Key (Referential Integrity)</text>
+
+        <rect x="16" y="90" width="30" height="16" rx="3" fill="#f3e8ff" />
+        <text x="31" y="102" text-anchor="middle" font-size="10" font-weight="700" fill="#6b21a8">UK</text>
+        <text x="56" y="102" font-size="11.5" fill="#0f172a">Unique Key (code, booking_code, transaction_code)</text>
+
+        <rect x="16" y="114" width="30" height="16" rx="3" fill="#dcfce7" />
+        <text x="31" y="126" text-anchor="middle" font-size="10" font-weight="700" fill="#166534">IDX</text>
+        <text x="56" y="126" font-size="11.5" fill="#0f172a">Indexed Lookup Column (* = NOT NULL)</text>
+
+        <!-- Crow's Foot Symbols -->
+        <line x1="16" y1="146" x2="46" y2="146" stroke="#1e293b" stroke-width="1.8" />
+        <line x1="26" y1="140" x2="26" y2="152" stroke="#1e293b" stroke-width="1.8" />
+        <line x1="33" y1="140" x2="33" y2="152" stroke="#1e293b" stroke-width="1.8" />
+        <text x="56" y="150" font-size="11.5" fill="#0f172a">Mandatory One (||) — Exactly One Parent</text>
+
+        <line x1="16" y1="170" x2="46" y2="170" stroke="#1e293b" stroke-width="1.8" />
+        <circle cx="25" cy="170" r="4" fill="#ffffff" stroke="#1e293b" stroke-width="1.5" />
+        <path d="M 32 170 L 45 163 M 32 170 L 45 170 M 32 170 L 45 177" stroke="#1e293b" stroke-width="1.6" fill="none" />
+        <text x="56" y="174" font-size="11.5" fill="#0f172a">Optional Many (o{) — Zero or More Children</text>
+
+        <!-- DB Constraints Summary -->
+        <line x1="16" y1="190" x2="364" y2="190" stroke="#cbd5e1" stroke-width="1" />
+        <text x="16" y="208" font-size="11" font-weight="700" fill="#0f172a">PostgreSQL Integrity &amp; Triggers:</text>
+        <text x="16" y="225" font-size="10.5" fill="#334155">• BOOKINGS: GIST Exclusion prevents overlapping room dates</text>
+        <text x="16" y="241" font-size="10.5" fill="#334155">• ROOMS: Composite UNIQUE(hotel_id, room_number)</text>
+        <text x="16" y="257" font-size="10.5" fill="#334155">• TRIGGERS: Bidirectional status sync BOOKINGS ↔ PAYMENTS</text>
+      </g>
+    </svg>
+  </div>
+
+  <script>
+    function getSerializedSVG() {
+      const svg = document.getElementById("diagram-svg");
+      const serializer = new XMLSerializer();
+      let source = serializer.serializeToString(svg);
+      if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+        source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+      }
+      return source;
+    }
+
+    function downloadSVG() {
+      const source = getSerializedSVG();
+      const blob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "02-erd.svg";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function exportPNG() {
+      const source = getSerializedSVG();
+      const img = new Image();
+      const svgBlob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(svgBlob);
+      img.onload = function () {
+        const scale = 2;
+        const canvas = document.createElement("canvas");
+        canvas.width = 1680 * scale;
+        canvas.height = 1130 * scale;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        URL.revokeObjectURL(url);
+        canvas.toBlob(function (pngBlob) {
+          const pngUrl = URL.createObjectURL(pngBlob);
+          const a = document.createElement("a");
+          a.href = pngUrl;
+          a.download = "02-erd.png";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(pngUrl);
+        }, "image/png");
+      };
+      img.src = url;
+    }
+  </script>
+</body>
+</html>

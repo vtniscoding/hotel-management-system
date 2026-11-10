@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<svg
+      id="diagram-svg"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1600 1040"
+      font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif"
+    >
+      <defs>
+        <!-- Standard UML Open Arrowhead for «include» Dependency -->
+        <marker id="arrow-include" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
+          <path d="M 0.5 1.5 L 9 5 L 0.5 8.5" fill="none" stroke="#b45309" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+        </marker>
+      </defs>
+
+      <!-- Canvas Background -->
+      <rect x="0" y="0" width="1600" height="1040" fill="#ffffff" />
+
+      <!-- Diagram Header Title -->
+      <g id="diagram-header">
+        <text x="800" y="29" text-anchor="middle" font-size="20" font-weight="700" fill="#0f172a" letter-spacing="0.4">MOSARI RESORT &amp; SPA — SYSTEM USE CASE DIAGRAM</text>
+        <text x="800" y="49" text-anchor="middle" font-size="12.5" font-weight="500" fill="#475569">Multi-Branch Hotel Chain Room Booking &amp; Payment System (UML 2.5 Behavioral Specification)</text>
+      </g>
+
+      <!-- ================================================================= -->
+      <!-- SYSTEM BOUNDARY & PACKAGES                                        -->
+      <!-- ================================================================= -->
+      <g id="system-boundary">
+        <rect x="260" y="66" width="1050" height="910" rx="8" fill="#f8fafc" stroke="#334155" stroke-width="2" />
+        <rect x="260" y="66" width="1050" height="34" rx="8" fill="#1e293b" />
+        <text x="785" y="88" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff" letter-spacing="0.5">System Boundary: Mosari Resort Room Booking &amp; Payment System</text>
+
+        <!-- Package 1: Customer Services & Booking Flow -->
+        <g id="package-customer-services">
+          <rect x="290" y="134" width="465" height="790" rx="6" fill="#fffdf7" stroke="#d97706" stroke-width="1.5" stroke-dasharray="6,4" />
+          <rect x="306" y="123" width="285" height="22" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.2" />
+          <text x="448" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#92400e">Package 1: Customer Services &amp; Booking Flow</text>
+        </g>
+
+        <!-- Package 2: Payment, Operations & Management -->
+        <g id="package-payment-operations">
+          <rect x="815" y="134" width="465" height="790" rx="6" fill="#f4f9ff" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="6,4" />
+          <rect x="831" y="123" width="295" height="22" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.2" />
+          <text x="978" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="#075985">Package 2: Payment, Operations &amp; Management</text>
+        </g>
+      </g>
+
+      <!-- ================================================================= -->
+      <!-- STANDARD UML 2.5 ACTOR ASSOCIATIONS (CONTINUOUS SOLID LINES)      -->
+      <!-- Zero bus trunks, zero junction dots, zero line intersections      -->
+      <!-- ================================================================= -->
+      <g id="uml-associations" fill="none" stroke-linecap="square" stroke-linejoin="miter">
+
+        <!-- 1. Guest / Customer Individual Associations (9 Use Cases) -->
+        <g id="associations-customer" stroke="#1e293b" stroke-width="1.5">
+          <!-- Customer — UC9: Select Receiving Bank & Generate Dynamic VietQR -->
+          <path d="M 170 485 H 184 V 112 H 785 V 230 H 865" />
+          <!-- Customer — UC1: Browse Destinations & Luxury Suites -->
+          <path d="M 170 495 H 194 V 185 H 345" />
+          <!-- Customer — UC2: Switch Language -->
+          <path d="M 170 505 H 204 V 263 H 345" />
+          <!-- Customer — UC3: Search & Check Availability -->
+          <path d="M 170 515 H 214 V 342 H 345" />
+          <!-- Customer — UC4: Create Room Reservation -->
+          <path d="M 170 525 H 224 V 430 H 345" />
+          <!-- Customer — UC6: Track / Lookup Reservation by Code -->
+          <path d="M 170 535 H 224 V 635 H 345" />
+          <!-- Customer — UC7: Cancel Pending Booking -->
+          <path d="M 170 545 H 214 V 715 H 345" />
+          <!-- Customer — UC8: Sign In -->
+          <path d="M 170 555 H 204 V 795 H 345" />
+          <!-- Customer — UC14: Customer Sign Up -->
+          <path d="M 170 565 H 194 V 875 H 345" />
+        </g>
+
+        <!-- 2. Payment Gateway Individual Associations (2 Use Cases) -->
+        <g id="associations-gateway" stroke="#4338ca" stroke-width="1.6">
+          <!-- Payment Gateway — UC9: Select Receiving Bank & Generate Dynamic VietQR -->
+          <path d="M 1410 290 H 1345 V 230 H 1235" />
+          <!-- Payment Gateway — UC10: Process Payment & Webhook -->
+          <path d="M 1410 330 H 1345 V 390 H 1235" />
+        </g>
+
+        <!-- 3. Receptionist / Staff Individual Associations (5 Use Cases) -->
+        <g id="associations-staff" stroke="#0f766e" stroke-width="1.5">
+          <!-- Staff — UC3: Search & Check Availability -->
+          <path d="M 1410 545 H 1365 V 462 H 766 V 342 H 705" />
+          <!-- Staff — UC6: Track / Lookup Reservation by Code -->
+          <path d="M 1410 558 H 1350 V 474 H 776 V 635 H 705" />
+          <!-- Staff — UC8: Sign In -->
+          <path d="M 1410 571 H 1335 V 486 H 786 V 787 H 702" />
+          <!-- Staff — UC13: Approve / Reject Bookings -->
+          <path d="M 1410 584 H 1320 V 550 H 1235" />
+          <!-- Staff — UC12: Manage Physical Rooms -->
+          <path d="M 1410 597 H 1320 V 682 H 1232" />
+        </g>
+
+        <!-- 4. Resort Administrator Individual Associations (4 Use Cases) -->
+        <g id="associations-admin" stroke="#9a3412" stroke-width="1.5">
+          <!-- Admin — UC12: Manage Physical Rooms -->
+          <path d="M 1410 800 H 1335 V 698 H 1232" />
+          <!-- Admin — UC11: Audit & Manage Payments Ledger -->
+          <path d="M 1410 815 H 1335 V 830 H 1235" />
+          <!-- Admin — UC13: Approve / Reject Bookings -->
+          <path d="M 1410 830 H 1350 V 942 H 802 V 550 H 865" />
+          <!-- Admin — UC8: Sign In -->
+          <path d="M 1410 845 H 1365 V 954 H 792 V 803 H 702" />
+        </g>
+
+        <!-- 5. Mandatory Behavioral «include» Dependency (UC4 -> UC5) -->
+        <g id="uml-includes" stroke="#b45309" stroke-width="1.7" stroke-dasharray="5,4">
+          <!-- UC4 (Create Room Reservation) includes UC5 (Validate Reservation Availability) -->
+          <path d="M 525 460 V 515" marker-end="url(#arrow-include)" />
+        </g>
+      </g>
+
+      <!-- ================================================================= -->
+      <!-- STEREOTYPE LABELS & UML EXPLANATORY NOTES                         -->
+      <!-- ================================================================= -->
+      <g id="uml-annotations">
+        <!-- «include» Stereotype Label for UC4 -> UC5 -->
+        <rect x="536" y="476" width="72" height="19" rx="3" fill="#fffbeb" stroke="#f59e0b" stroke-width="0.9" />
+        <text x="572" y="489" text-anchor="middle" font-size="11" font-weight="700" fill="#92400e">«include»</text>
+
+        <!-- UML Dog-Eared Explanatory Note for Payment Gateway Integration (Outside Top-Right) -->
+        <g id="note-gateway-integration" transform="translate(1375, 118)">
+          <!-- Dashed Note Anchor Line to Gateway Associations -->
+          <path d="M 0 55 H -30 V 112" fill="none" stroke="#6366f1" stroke-width="1.2" stroke-dasharray="4,3" />
+          <!-- Dog-Eared Note Polygon -->
+          <path d="M 0 0 H 193 L 205 12 V 92 H 0 Z" fill="#eef2ff" stroke="#6366f1" stroke-width="1.2" />
+          <path d="M 193 0 V 12 H 205" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.1" />
+          <text x="10" y="19" font-size="10.5" font-weight="700" fill="#312e81">Gateway Integration Note:</text>
+          <text x="10" y="38" font-size="10" fill="#3730a3">• UC9: Outgoing VietQR API</text>
+          <text x="18" y="52" font-size="10" fill="#3730a3">payload request</text>
+          <text x="10" y="70" font-size="10" fill="#3730a3">• UC10: Incoming payment</text>
+          <text x="18" y="84" font-size="10" fill="#3730a3">notification via Webhook/IPN</text>
+        </g>
+      </g>
+
+      <!-- ================================================================= -->
+      <!-- USE CASE ELLIPSES — PACKAGE 1 (CUSTOMER SERVICES & BOOKING FLOW)  -->
+      <!-- ================================================================= -->
+      <g id="usecases-package-1">
+        <!-- UC1 -->
+        <g id="uc-1" transform="translate(525, 185)">
+          <ellipse cx="0" cy="0" rx="180" ry="27" fill="#ffffff" stroke="#b45309" stroke-width="1.8" />
+          <text x="0" y="-3" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">UC1: Browse Destinations</text>
+          <text x="0" y="12" text-anchor="middle" font-size="11" fill="#475569">&amp; Luxury Suites</text>
+        </g>
+
+        <!-- UC2 -->
+        <g id="uc-2" transform="translate(525, 263)">
+          <ellipse cx="0" cy="0" rx="180" ry="27" fill="#ffffff" stroke="#b45309" stroke-width="1.8" />
+          <text x="0" y="-3" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">UC2: Switch Language</text>
+          <text x="0" y="12" text-anchor="middle" font-size="11" fill="#475569">(VN / EN Bilingual Interface)</text>
+        </g>
+
+        <!-- UC3 -->
+        <g id="uc-3" transform="translate(525, 342)">
+          <ellipse cx="0" cy="0" rx="180" ry="28" fill="#ffffff" stroke="#b45309" stroke-width="1.8" />
+          <text x="0" y="-3" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">UC3: Search &amp; Check Availability</text>
+          <text x="0" y="12" text-anchor="middle" font-size="11" fill="#475569">(Real-time Suite Inventory)</text>
+        </g>
+
+        <!-- UC4 -->
+        <g id="uc-4" transform="translate(525, 430)">
+          <ellipse cx="0" cy="0" rx="180" ry="30" fill="#fffbeb" stroke="#b45309" stroke-width="2.1" />
+          <text x="0" y="-3" text-anchor="middle" font-size="12.5" font-weight="700" fill="#92400e">UC4: Create Room Reservation</text>
+          <text x="0" y="13" text-anchor="middle" font-size="11" fill="#78350f">(Allocate Room &amp; Issue Booking Code)</text>
+        </g>
+
+        <!-- UC5 (Internal Included Use Case — Business-Level Validation) -->
+        <g id="uc-5" transform="translate(525, 545)">
+          <ellipse cx="0" cy="0" rx="180" ry="30" fill="#fefce8" stroke="#d97706" stroke-width="1.8" stroke-dasharray="5,3" />
+          <text x="0" y="-3" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">UC5: Validate Reservation Availability</text>
+          <text x="0" y="13" text-anchor="middle" font-size="11" fill="#b45309">(Prevent Overlapping Stay Dates)</text>
+        </g>
+
+        <!-- UC6 -->
+        <g id="uc-6" transform="translate(525, 635)">
+          <ellipse cx="0" cy="0" rx="180" ry="27" fill="#ffffff" stroke="#b45309" stroke-width="1.8" />
+          <text x="0" y="-3" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">UC6: Track / Lookup Reservation</text>
+          <text x="0" y="12" text-anchor="middle" font-size="11" fill="#475569">by Booking Code (MSR-XXXXXX)</text>
+        </g>
+
+        <!-- UC7 -->
+        <g id="uc-7" transform="translate(525, 715)">
+          <ellipse cx="0" cy="0" rx="180" ry="26" fill="#ffffff" stroke="#b45309" stroke-width="1.8" />
+          <text x="0" y="4" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">UC7: Cancel Pending Booking</text>
+        </g>
+
+        <!-- UC8 (Shared Authentication for Customer, Staff & Admin) -->
+        <g id="uc-8" transform="translate(525, 795)">
+          <ellipse cx="0" cy="0" rx="180" ry="27" fill="#ffffff" stroke="#b45309" stroke-width="1.8" />
+          <text x="0" y="-3" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">UC8: Sign In</text>
+          <text x="0" y="12" text-anchor="middle" font-size="11" fill="#475569">(Role-Based Access Control)</text>
+        </g>
+
+        <!-- UC14 (Customer-Only Account Registration) -->
+        <g id="uc-14" transform="translate(525, 875)">
+          <ellipse cx="0" cy="0" rx="180" ry="27" fill="#ffffff" stroke="#b45309" stroke-width="1.8" />
+          <text x="0" y="-3" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">UC14: Customer Sign Up</text>
+          <text x="0" y="12" text-anchor="middle" font-size="11" fill="#475569">(Register Member Account)</text>
+        </g>
+      </g>
+
+      <!-- ================================================================= -->
+      <!-- USE CASE ELLIPSES — PACKAGE 2 (PAYMENT, OPERATIONS & MANAGEMENT)  -->
+      <!-- ================================================================= -->
+      <g id="usecases-package-2">
+        <!-- UC9 -->
+        <g id="uc-9" transform="translate(1050, 230)">
+          <ellipse cx="0" cy="0" rx="185" ry="31" fill="#ffffff" stroke="#0369a1" stroke-width="1.8" />
+          <text x="0" y="-3" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">UC9: Select Receiving Bank</text>
+          <text x="0" y="13" text-anchor="middle" font-size="11" fill="#475569">&amp; Generate Dynamic VietQR</text>
+        </g>
+
+        <!-- UC10 -->
+        <g id="uc-10" transform="translate(1050, 390)">
+          <ellipse cx="0" cy="0" rx="185" ry="31" fill="#ffffff" stroke="#0369a1" stroke-width="1.8" />
+          <text x="0" y="-3" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">UC10: Process Payment &amp; Webhook</text>
+          <text x="0" y="13" text-anchor="middle" font-size="11" fill="#475569">(Update Payment &amp; Booking Status)</text>
+        </g>
+
+        <!-- UC13 -->
+        <g id="uc-13" transform="translate(1050, 550)">
+          <ellipse cx="0" cy="0" rx="185" ry="31" fill="#ffffff" stroke="#0369a1" stroke-width="1.8" />
+          <text x="0" y="-3" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">UC13: Approve / Reject Bookings</text>
+          <text x="0" y="13" text-anchor="middle" font-size="11" fill="#475569">(Administrative Status Control)</text>
+        </g>
+
+        <!-- UC12 -->
+        <g id="uc-12" transform="translate(1050, 690)">
+          <ellipse cx="0" cy="0" rx="185" ry="31" fill="#ffffff" stroke="#0369a1" stroke-width="1.8" />
+          <text x="0" y="-3" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">UC12: Manage Physical Rooms</text>
+          <text x="0" y="13" text-anchor="middle" font-size="11" fill="#475569">(Available / Maintenance / Occupied)</text>
+        </g>
+
+        <!-- UC11 -->
+        <g id="uc-11" transform="translate(1050, 830)">
+          <ellipse cx="0" cy="0" rx="185" ry="31" fill="#ffffff" stroke="#0369a1" stroke-width="1.8" />
+          <text x="0" y="-3" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">UC11: Audit &amp; Manage</text>
+          <text x="0" y="13" text-anchor="middle" font-size="11" fill="#475569">Payments Ledger (TXN-XXXXXX)</text>
+        </g>
+      </g>
+
+      <!-- ================================================================= -->
+      <!-- ACTORS (OUTSIDE SYSTEM BOUNDARY)                                  -->
+      <!-- ================================================================= -->
+
+      <!-- Actor 1: Guest / Customer (Left) -->
+      <g id="actor-customer" transform="translate(95, 525)">
+        <rect x="-75" y="-65" width="150" height="125" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.4" />
+        <circle cx="0" cy="-32" r="14" fill="#e0f2fe" stroke="#1e293b" stroke-width="2.2" />
+        <line x1="0" y1="-18" x2="0" y2="12" stroke="#1e293b" stroke-width="2.2" />
+        <line x1="-20" y1="-6" x2="20" y2="-6" stroke="#1e293b" stroke-width="2.2" />
+        <line x1="0" y1="12" x2="-16" y2="34" stroke="#1e293b" stroke-width="2.2" />
+        <line x1="0" y1="12" x2="16" y2="34" stroke="#1e293b" stroke-width="2.2" />
+        <text x="0" y="52" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Guest / Customer</text>
+      </g>
+
+      <!-- Actor 2: Payment Gateway (Right Top) -->
+      <g id="actor-gateway" transform="translate(1490, 310)">
+        <rect x="-80" y="-65" width="160" height="130" rx="8" fill="#eef2ff" stroke="#a5b4fc" stroke-width="1.4" />
+        <circle cx="0" cy="-32" r="14" fill="#e0e7ff" stroke="#4338ca" stroke-width="2.2" />
+        <line x1="0" y1="-18" x2="0" y2="12" stroke="#4338ca" stroke-width="2.2" />
+        <line x1="-20" y1="-6" x2="20" y2="-6" stroke="#4338ca" stroke-width="2.2" />
+        <line x1="0" y1="12" x2="-16" y2="34" stroke="#4338ca" stroke-width="2.2" />
+        <line x1="0" y1="12" x2="16" y2="34" stroke="#4338ca" stroke-width="2.2" />
+        <text x="0" y="48" text-anchor="middle" font-size="12.5" font-weight="700" fill="#312e81">Payment Gateway</text>
+        <text x="0" y="62" text-anchor="middle" font-size="11" fill="#4338ca">(VietQR Napas247)</text>
+      </g>
+
+      <!-- Actor 3: Receptionist / Staff (Right Middle) -->
+      <g id="actor-staff" transform="translate(1490, 585)">
+        <rect x="-80" y="-65" width="160" height="125" rx="8" fill="#f0fdfa" stroke="#99f6e4" stroke-width="1.4" />
+        <circle cx="0" cy="-32" r="14" fill="#ccfbf1" stroke="#0f766e" stroke-width="2.2" />
+        <line x1="0" y1="-18" x2="0" y2="12" stroke="#0f766e" stroke-width="2.2" />
+        <line x1="-20" y1="-6" x2="20" y2="-6" stroke="#0f766e" stroke-width="2.2" />
+        <line x1="0" y1="12" x2="-16" y2="34" stroke="#0f766e" stroke-width="2.2" />
+        <line x1="0" y1="12" x2="16" y2="34" stroke="#0f766e" stroke-width="2.2" />
+        <text x="0" y="52" text-anchor="middle" font-size="13" font-weight="700" fill="#115e59">Receptionist / Staff</text>
+      </g>
+
+      <!-- Actor 4: Resort Administrator (Right Bottom) -->
+      <g id="actor-admin" transform="translate(1490, 820)">
+        <rect x="-80" y="-65" width="160" height="125" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.4" />
+        <circle cx="0" cy="-32" r="14" fill="#ffedd5" stroke="#9a3412" stroke-width="2.2" />
+        <line x1="0" y1="-18" x2="0" y2="12" stroke="#9a3412" stroke-width="2.2" />
+        <line x1="-20" y1="-6" x2="20" y2="-6" stroke="#9a3412" stroke-width="2.2" />
+        <line x1="0" y1="12" x2="-16" y2="34" stroke="#9a3412" stroke-width="2.2" />
+        <line x1="0" y1="12" x2="16" y2="34" stroke="#9a3412" stroke-width="2.2" />
+        <text x="0" y="52" text-anchor="middle" font-size="13" font-weight="700" fill="#7c2d12">Resort Administrator</text>
+      </g>
+
+      <!-- ================================================================= -->
+      <!-- STANDARD UML 2.5 NOTATION LEGEND                                  -->
+      <!-- ================================================================= -->
+      <g id="diagram-legend" transform="translate(260, 992)">
+        <rect x="0" y="-6" width="1050" height="34" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
+        <text x="18" y="15" font-size="11.5" font-weight="700" fill="#0f172a">UML 2.5 Notation:</text>
+
+        <!-- Actor Association (Solid Line) -->
+        <line x1="145" y1="11" x2="195" y2="11" stroke="#1e293b" stroke-width="2" />
+        <text x="205" y="15" font-size="11.5" fill="#334155">Actor Association (solid line; color-coded by actor for visual clarity)</text>
+
+        <!-- Include Relationship (Dashed Line + Open Arrowhead) -->
+        <line x1="600" y1="11" x2="650" y2="11" stroke="#b45309" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arrow-include)" />
+        <text x="660" y="15" font-size="11.5" fill="#334155">«include» Mandatory Dependency</text>
+
+        <!-- UML Explanatory Note -->
+        <path d="M 865 3 H 883 L 889 9 V 19 H 865 Z" fill="#eef2ff" stroke="#6366f1" stroke-width="1.2" />
+        <path d="M 883 3 V 9 H 889" fill="#e0e7ff" stroke="#6366f1" stroke-width="1" />
+        <text x="898" y="15" font-size="11.5" fill="#334155">UML Explanatory Note</text>
+      </g>
+    </svg>
