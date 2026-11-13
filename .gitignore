@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Documentation
+docs/
+docs
+
 # Environment variables
 .env
 .env.local
